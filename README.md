@@ -1,17 +1,17 @@
-Huawai R4850G2 rectifier canbus control
+# Huawai R4850G2 rectifier canbus control
 
-   Based on:
+  ## Based on:
 
    https://www.beyondlogic.org/review-huawei-r4850g2-power-supply-53-5vdc-3kw/
    https://github.com/craigpeacock/Huawei_R4850G2_CAN
 
-   IMPORTANT:
+  ## IMPORTANT
 
    - adjust CAN.setClockFrequency() to match the crystal on the MCP2515 Board
    - put a termination jumper on J1, didn't work without for me (AZDelivey MCP2515 board)
    - be careful with any Serial.print statements in the onReceive handler. This will lead to lost CAN frames.
 
-   REQUIREMENTS: 
+  ## Requirements 
    
    - this has been tested with an Arduino Mega 2560 and a Nano
    - libraries used:
@@ -21,7 +21,7 @@ Huawai R4850G2 rectifier canbus control
       * SSD1306Ascii (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
       * ClickEncoder (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
 
-   PICTURES:
+  ## PICTURES:
 
 ![image](https://github.com/haklein/r4850g2_arduino/assets/4569994/4e9a6961-6cf1-44dc-b249-fee5d6895d06)
 
