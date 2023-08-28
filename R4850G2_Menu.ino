@@ -155,8 +155,8 @@ MENU_INPUTS(in, &encStream);
 MENU(mainMenu, "R4850 Settings", Menu::doNothing, Menu::noEvent, Menu::wrapStyle
 
      //    , OP("Op2", action2, enterEvent)
-     , FIELD(volts, "Volts", "V", 40.0, 60.0, 1, 0.1, doNothing, noEvent, wrapStyle)
-     , FIELD(amps, "Amps", "A", 0.0, 50.0, 1, 0.1, doNothing, noEvent, wrapStyle)
+     , FIELD(volts, "Volts", "V", 41.5, 58.5, 1, 0.1, doNothing, noEvent, wrapStyle)
+     , FIELD(amps, "Amps", "A", 0.0, 60.0, 1, 0.1, doNothing, noEvent, wrapStyle)
      , OP(">Apply", apply, enterEvent)
 
      , OP(">Persist", persist, enterEvent)
