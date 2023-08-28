@@ -8,12 +8,17 @@ Huawai R4850G2 rectifier canbus control
    IMPORTANT:
 
    - adjust CAN.setClockFrequency() to match the crystal on the MCP2515 Board
-   - put a termination jumper on J1, didn't work without for me
-   - be careful with any Serial.print in the onReceive handler. This will lead to lost CAN frames.
-   - this has been tested with an Arduino Mega 2560 and Nano
+   - put a termination jumper on J1, didn't work without for me (AZDelivey MCP2515 board)
+   - be careful with any Serial.print statements in the onReceive handler. This will lead to lost CAN frames.
+
+   REQUIREMENTS: 
+   
+   - this has been tested with an Arduino Mega 2560 and a Nano
    - libraries used:
       * Adafruit can library (forked from sandeepmistry/arduino-CAN):
         https://github.com/adafruit/arduino-CAN
-      * ArduinoMenu
-      * SSD1306Ascii
-      * ClickEncoder
+      * ArduinoMenu (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
+      * SSD1306Ascii (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
+      * ClickEncoder (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
+
+![image](https://github.com/haklein/r4850g2_arduino/assets/4569994/4e9a6961-6cf1-44dc-b249-fee5d6895d06)
