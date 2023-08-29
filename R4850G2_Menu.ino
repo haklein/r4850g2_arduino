@@ -14,11 +14,11 @@
    - be careful with any Serial.print in the onReceive handler. This will lead to lost CAN frames.
    - this has been tested with an Arduino Mega 2560 and Nano
    - libraries used:
-      * Adafruit can library (forked from sandeepmistry/arduino-CAN):
+        Adafruit can library (forked from sandeepmistry/arduino-CAN):
         https://github.com/adafruit/arduino-CAN
-      * ArduinoMenu
-      * SSD1306Ascii
-      * ClickEncoder
+        ArduinoMenu
+        SSD1306Ascii
+        ClickEncoder
 
    Mega 2560 SPI pins:
 
@@ -45,6 +45,17 @@
 #define ROTARY_PIN_DT 4
 #define ROTARY_PIN_SW 5
 
+#define VOLT_LIMIT_LOW 41.5
+#define VOLT_LIMIT_HIGH 58.5
+#define AMP_LIMIT_LOW 0.0
+#define AMP_LIMIT_HIGH 60.0
+
+#define VOLT_DEFAULT 55.2 
+#define AMP_DEFAULT 1.0
+
+#define MENU_TIMEOUT 10  // sketch doesn't send CAN frames while in menu, so timeout early to prevent
+                         // rectifier from defaulting to offline values
+                         
 #define MAX_DEPTH 1 // menu depth
 
 #include <CAN.h>
@@ -107,19 +118,15 @@ ClickEncoderStream encStream(clickEncoder, 1);
 
 struct RectifierParameters rp;
 
-
 unsigned long g_Time1000 = 0;
 
 bool doPrint = false;
 
-
-float volts = 52.2;
-float amps = 5;
+float volts = VOLT_DEFAULT;
+float amps = AMP_DEFAULT;
 
 result persist(eventMask e) {
-  // Serial.print(e);
-  Serial.println(F(" persist executed, proceed menu")); Serial.flush();
-  // trace(if (e == enterEvent) oled.clear(0, oled.displayWidth(), 2, 3));
+  Serial.println(F("persist executed")); Serial.flush();
   Serial.println(volts);
   Serial.println(amps);
   r4850_set_voltage(volts, true);
@@ -130,8 +137,7 @@ result persist(eventMask e) {
 }
 
 result apply(eventMask e) {
-  // Serial.print(e);
-  Serial.println(F(" apply executed, proceed menu")); Serial.flush();
+  Serial.println(F("apply executed")); Serial.flush();
   Serial.println(volts);
   Serial.println(amps);
   r4850_set_voltage(volts, false);
@@ -145,60 +151,23 @@ result doAlert(eventMask e, prompt &item);
 
 MENU_INPUTS(in, &encStream);
 
-/*
-  void timerIsr() {
-  clickEncoder.service();
-  }
-*/
-
-
 MENU(mainMenu, "R4850 Settings", Menu::doNothing, Menu::noEvent, Menu::wrapStyle
-
-     //    , OP("Op2", action2, enterEvent)
-     , FIELD(volts, "Volts", "V", 41.5, 58.5, 1, 0.1, doNothing, noEvent, wrapStyle)
-     , FIELD(amps, "Amps", "A", 0.0, 60.0, 1, 0.1, doNothing, noEvent, wrapStyle)
+     , FIELD(volts, "Volts", "V", VOLT_LIMIT_LOW, VOLT_LIMIT_HIGH, 1, 0.1, doNothing, noEvent, wrapStyle)
+     , FIELD(amps, "Amps", "A", AMP_LIMIT_LOW, AMP_LIMIT_HIGH, 1, 0.1, doNothing, noEvent, wrapStyle)
      , OP(">Apply", apply, enterEvent)
-
      , OP(">Persist", persist, enterEvent)
-     //    , SUBMENU(subMenu)
-     //    , SUBMENU(setLed)
-     //    , OP("LED On", myLedOn, enterEvent)
-     //    , OP("LED Off", myLedOff, enterEvent)
-     //    , SUBMENU(selMenu)
-     //    , SUBMENU(chooseMenu)
-     //    , OP("Alert test", doAlert, enterEvent)
      , EXIT("<Back")
     );
-
 
 const panel panels[] MEMMODE = {{0, 0, 128 / fontW, 64 / fontH}};
 navNode* nodes[sizeof(panels) / sizeof(panel)]; //navNodes to store navigation status
 panelsList pList(panels, nodes, 1); //a list of panels and nodes
 idx_t tops[MAX_DEPTH] = {0}; //store cursor positions for each level
-// SSD1306AsciiOut outOLED(&oled, tops, pList); //oled output device menu driver
 SSD1306AsciiOut outOLED(&oled, tops, pList, 8, 1+((fontH - 1) >> 3) ); //oled output device menu driver
 menuOut* constMEM outputs[] MEMMODE = {&outOLED}; //list of output devices
 outputsList out(outputs, 1); //outputs list
 
 NAVROOT(nav, mainMenu, MAX_DEPTH, in, out);
-
-result alert(menuOut& o, idleEvent e) {
-  if (e == idling) {
-    o.setCursor(0, 0);
-    o.print(F("alert test"));
-    o.setCursor(0, 1);
-    o.print(F("press [select]"));
-    o.setCursor(0, 2);
-    o.print(F("to continue..."));
-  }
-  return proceed;
-}
-
-result doAlert(eventMask e, prompt &item) {
-  nav.idleOn(alert);
-  return proceed;
-}
-
 
 int r4850_ack(uint8_t *frame)
 {
@@ -344,10 +313,8 @@ void onCANReceive(int packetSize)
   }
 }
 
-
 int r4850_request_data()
 {
-
   uint8_t data[8];
   data[0] = 0x00;
   data[1] = 0x00;
@@ -359,7 +326,6 @@ int r4850_request_data()
   data[7] = 0x00;
 
   return sendCAN( 0x108040FE , data, 8, true);
-
 }
 
 int r4850_set_voltage(float voltage, bool nonvolatile)
@@ -383,9 +349,7 @@ int r4850_set_voltage(float voltage, bool nonvolatile)
   data[7] = value & 0xFF;
 
   return sendCAN( 0x108180FE , data, 8, false);
-
 }
-
 
 int r4850_set_current(float current, bool nonvolatile)
 {
@@ -418,10 +382,8 @@ int sendCAN(uint32_t msgid, uint8_t *data, uint8_t len, bool rtr)
     oled.setFont(statusFont);
     oled.clear();
     oled.set2X();
-
     oled.println("CAN err");
     oled.set1X();
-
     oled.println(millis());
     oled.setFont(menuFont);
     return -1;
@@ -439,7 +401,7 @@ void setup() {
 
   pinMode(ROTARY_PIN_SW, INPUT_PULLUP);
   Timer1.initialize(1000);
-  Timer1.attachInterrupt(timerIsr);
+  Timer1.attachInterrupt(timerIsr); // used for rotary decoder
 
   CAN.setClockFrequency(8E6); // 8 MHz for Adafruit MCP2515 CAN Module
 
@@ -451,19 +413,16 @@ void setup() {
   }
   CAN.onReceive(onCANReceive);
 
-
-
   Serial.println(F("INFO: CAN setup done."));
 
   oled.begin(&Adafruit128x64, SCREEN_ADDRESS);
   oled.setFont(menuFont);
-
-
   oled.clear();
   oled.println(F("R4850G2 Inverter"));
   oled.println("Starting..");
 
   delay(500);
+  nav.timeOut = 15;
   nav.idleOn();
 }
 
@@ -505,17 +464,13 @@ void loop() {
       oled.println(F("V     "));
       oled.print(rp.output_current);
       oled.println(F("A           "));
-
       oled.set1X();
-
       oled.print(F("/"));
       oled.print(rp.max_output_current);
       oled.println(F("A;"));
       oled.print(rp.output_power);
       oled.print(F("W           "));
       oled.setFont(menuFont);
-
-
 
       Serial.println(F("DATA RECEIVED"));
       Serial.print(F("R48xx_DATA_INPUT_POWER: "));
