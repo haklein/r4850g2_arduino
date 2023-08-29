@@ -422,7 +422,7 @@ void setup() {
   oled.println("Starting..");
 
   delay(500);
-  nav.timeOut = 15;
+  nav.timeOut = MENU_TIMEOUT;
   nav.idleOn();
 }
 
