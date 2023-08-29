@@ -10,6 +10,8 @@
    - adjust CAN.setClockFrequency() to match the crystal on the MCP2515 Board
    - put a termination jumper on J1, didn't work without for me (AZDelivey MCP2515 board)
    - be careful with any Serial.print statements in the onReceive handler. This will lead to lost CAN frames.
+   - no regular status request CAN frames are being sent while the menu is active, so the rectifier will
+     fall back to offline values at some point (menu will hence timeout after 10s by default)
 
   ## Requirements 
    
