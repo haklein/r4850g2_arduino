@@ -7,6 +7,8 @@
    https://www.beyondlogic.org/review-huawei-r4850g2-power-supply-53-5vdc-3kw/
    https://github.com/craigpeacock/Huawei_R4850G2_CAN
 
+   Improvements from dl1bz
+
    IMPORTANT:
 
    - adjust CAN.setClockFrequency() to match the crystal on the MCP2515 Board
@@ -415,7 +417,10 @@ void setup() {
 
   Serial.println(F("INFO: CAN setup done."));
 
+  Wire.begin();
+  // Wire.setClock(400000L); # might be required on some boards
   oled.begin(&Adafruit128x64, SCREEN_ADDRESS);
+  //  oled.begin(&SH1106_128x64, SCREEN_ADDRESS); # use this instead on AZDelivery v3 nano board due to space constraints
   oled.setFont(menuFont);
   oled.clear();
   oled.println(F("R4850G2 Inverter"));
