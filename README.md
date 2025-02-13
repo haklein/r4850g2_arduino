@@ -8,7 +8,7 @@
   ## IMPORTANT
 
    - adjust CAN.setClockFrequency() to match the crystal on the MCP2515 Board
-   - put a termination jumper on J1, didn't work without for me (AZDelivey MCP2515 board)
+   - put a termination jumper on J1, didn't work without for me (AZDelivery MCP2515 board)
    - be careful with any Serial.print statements in the onReceive handler. This will lead to lost CAN frames.
    - no regular status request CAN frames are being sent while the menu is active, so the rectifier will
      fall back to offline values at some point (menu will hence timeout after 10s by default)
@@ -31,6 +31,6 @@
 
   ## PINOUT
 
-  @Roturbo has proovided a nice pinout for a nano: 
+  @Roturbo has provided a nice pinout for a nano: 
 
   ![316427349-3ad49603-3def-4ec2-9e40-f8289db90cfa](https://github.com/haklein/r4850g2_arduino/assets/4569994/0a200d5f-f5de-4887-b59d-5bd5942bd7a0)
