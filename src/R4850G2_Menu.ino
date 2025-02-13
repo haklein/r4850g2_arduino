@@ -477,29 +477,29 @@ void loop() {
       oled.print(F("W           "));
       oled.setFont(menuFont);
 
-      Serial.println(F("DATA RECEIVED"));
-      Serial.print(F("R48xx_DATA_INPUT_POWER: "));
+      Serial.println(F("RECV:"));
+      Serial.print(F("INPUT_POWER: "));
       Serial.println(rp.input_power);
-      Serial.print(F("R48xx_DATA_INPUT_FREQ: "));
+      Serial.print(F("INPUT_FREQ: "));
       Serial.println(rp.input_frequency);
-      Serial.print(F("R48xx_DATA_INPUT_CURRENT: "));
+      Serial.print(F("INPUT_CURRENT: "));
       Serial.println(rp.input_current);
-      Serial.print(F("R48xx_DATA_OUTPUT_POWER: "));
+      Serial.print(F("OUTPUT_POWER: "));
       Serial.println(rp.output_power);
-      Serial.print(F("R48xx_DATA_EFFICIENCY: "));
+      Serial.print(F("EFFICIENCY: "));
       Serial.println(rp.efficiency);
-      Serial.print(F("R48xx_DATA_OUTPUT_VOLTAGE: "));
+      Serial.print(F("OUTPUT_VOLTAGE: "));
       Serial.println(rp.output_voltage);
-      Serial.print(F("R48xx_DATA_OUTPUT_CURRENT_MAX: "));
+      Serial.print(F("OUTPUT_CURRENT_MAX: "));
       Serial.println(rp.max_output_current);
-      Serial.print(F("R48xx_DATA_INPUT_VOLTAGE: "));
+      Serial.print(F("INPUT_VOLTAGE: "));
       Serial.println(rp.input_voltage);
-      Serial.print(F("R48xx_DATA_OUTPUT_TEMPERATURE: "));
+      Serial.print(F("OUTPUT_TEMPERATURE: "));
       Serial.println(rp.output_temp);
-      Serial.print(F("R48xx_DATA_INPUT_TEMPERATURE: "));
+      Serial.print(F("INPUT_TEMPERATURE: "));
       Serial.println(rp.input_temp);
-      // Serial.println("R48xx_DATA_OUTPUT_CURRENT1");
-      Serial.print(F("R48xx_DATA_OUTPUT_CURRENT: "));
+      Serial.println("OUTPUT_CURRENT1");
+      Serial.print(F("OUTPUT_CURRENT: "));
       Serial.println(rp.output_current);
 
     }
