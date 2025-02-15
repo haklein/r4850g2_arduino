@@ -2,6 +2,10 @@
 
 This directory contains the schematics PDF and the Gerber zip.
 
+![PCB 2d view front](https://github.com/user-attachments/assets/c18db02c-cf32-4fbb-a179-55b502b8e7af)
+![PCB 3d view front](https://github.com/user-attachments/assets/5cee2819-e5f1-4449-be82-1d81b582f415)
+
+
 ## BOM
 
 Arduino Nano
