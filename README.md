@@ -27,6 +27,8 @@
 
 ![image](https://github.com/user-attachments/assets/6b1efe15-7531-4c83-ac09-217468b4d0bf)
 
+![image](https://github.com/user-attachments/assets/ebad8baa-e086-44e9-afd9-ef9afe57da40)
+
 ![image](https://github.com/haklein/r4850g2_arduino/assets/4569994/4e9a6961-6cf1-44dc-b249-fee5d6895d06)
 
 ![image](https://github.com/haklein/r4850g2_arduino/assets/4569994/0b62c0eb-7f6b-4b83-9882-98f3fad1fb27)
