@@ -23,6 +23,10 @@
       * SSD1306Ascii (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
       * ClickEncoder (for Sketch `R4850G2_Menu.ino`, not required for `R4850G2_V2.ino`)
 
+  ## Usage
+
+Pressing the rotary button opens the menu. Voltage and current can be set with the rotary encoder. The "Apply" menu item sets the power supply to the chosen values. Using the "Persist" menu item (scroll down below "Apply") will permanently store the settings in the power supply. Those will then be the default startup values. The power supply will also fall back to those values when the CAN commuication is interrupted.
+    
   ## PICTURES:
 
 ![image](https://github.com/user-attachments/assets/6b1efe15-7531-4c83-ac09-217468b4d0bf)
